@@ -1,1 +1,1 @@
-main: bundle exec ruby main.rb
+gifs: bundle exec rake publish_gifs

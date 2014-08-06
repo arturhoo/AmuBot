@@ -19,9 +19,10 @@ class Gifs
       if redis.get(l.id).nil? && l.score >= 2500 && l.url[-4..-1] == '.gif'
         redis.set l.id, 'check'
 
-        text = "Gif: #{l.title}<br><img src=\"#{l.url}\">"
-        hipchat[$room].send('Gifs', text, message_format: 'html')
-        abort
+        text = "<strong>Gif</strong>: #{l.title}<br><img src=\"#{l.url}\">"
+        hipchat[$room].send('Gifs', text, message_format: 'html',
+                            color: 'purple')
+        break
       end
     end
   end
