@@ -1,6 +1,6 @@
 require 'hipchat'
 require 'redis'
-require 'RedditKit'
+require 'redditkit'
 
 $room = ENV['ROOM']
 $hipchat_api_token = ENV['HIPCHAT_TOKEN']
