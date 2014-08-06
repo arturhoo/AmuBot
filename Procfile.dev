@@ -1,1 +1,2 @@
-gifs: bundle exec rake publish:gifs
+gif: bundle exec rake publish:gif
+video: bundle exec rake publish:video
