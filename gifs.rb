@@ -8,7 +8,11 @@ $hipchat_api_token = ENV['HIPCHAT_TOKEN']
 class Gifs
   def self.run
     hipchat = HipChat::Client.new($hipchat_api_token, api_version: 'v2')
-    redis = Redis.new
+    if ENV['REDISTOGO_URL']
+      redis = Redis.new(url: ENV['REDISTOGO_URL'])
+    else
+      redis = Redis.new
+    end
     links = RedditKit.links('gifs', category: 'hot')
 
     links.each do |l|
