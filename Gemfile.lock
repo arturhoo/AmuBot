@@ -123,5 +123,6 @@ DEPENDENCIES
   foreman
   hipchat
   jazz_hands
+  rake
   redditkit
   redis
