@@ -3,7 +3,8 @@ ruby '2.0.0'
 
 gem 'rake'
 gem 'redditkit'
-gem 'jazz_hands'
 gem 'redis'
 gem 'hipchat'
 gem 'foreman'
+
+gem 'jazz_hands', group: :development
