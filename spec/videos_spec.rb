@@ -43,11 +43,18 @@ describe Videos do
 
       subject.send(:hipchat=, hipchat_mock)
     end
+    after { Redis.new.flushdb }
 
     it 'calls the hipchat client correctly' do
       subject.stub :all_links, [link1, link2] do
         subject.run
         hipchat_mock.verify
+      end
+    end
+
+    it 'sends the link to the room correctly' do
+      subject.stub :all_links, [link1, link2] do
+        subject.run
         hipchat_mock_room.verify
       end
     end
