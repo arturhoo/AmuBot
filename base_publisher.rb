@@ -14,8 +14,7 @@ class BasePublisher
   end
 
   def run
-    return if Time.now.utc.hour >= 0 && Time.now.utc.hour < 24
-    # return if Time.now.utc.hour >= 11 && Time.now.utc.hour < 22
+    return if Time.now.utc.hour >= 11 && Time.now.utc.hour < 22
     abort 'Exiting. Running outside of business hours...'
   end
 
