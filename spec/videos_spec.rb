@@ -4,7 +4,7 @@ require_relative '../lib/videos'
 describe Videos do
 
   reddit_kit_double = Class.new do
-    def self.links(arg1, options={})
+    def self.links(_arg1, _options = {})
       []
     end
   end
@@ -37,7 +37,7 @@ describe Videos do
       subject.send(:room=, 'Room')
 
       hipchat_mock_room.expect(:send, true) do |a1, a2, a3|
-        a1 == 'Videos' && String === a2 && Hash === a3
+        a1 == 'Videos' && a2.class == String && a3.class == Hash
       end
       hipchat_mock.expect(:[], hipchat_mock_room, [String])
 
@@ -49,6 +49,59 @@ describe Videos do
         subject.run
         hipchat_mock.verify
         hipchat_mock_room.verify
+      end
+    end
+  end
+
+  describe '#prepare_text' do
+    describe 'without a thumbnail url' do
+    end
+
+    describe 'with a thumbnail url' do
+    end
+  end
+
+  describe 'Videos::thumbnail' do
+    subject { Videos }
+
+    describe 'without a media embed' do
+      let(:link) { OpenStruct.new }
+
+      it 'returns nil' do
+        subject.thumbnail(link).must_be_nil
+      end
+    end
+
+    describe 'with a thumbnail embed' do
+      describe 'but without content' do
+        let(:link) { OpenStruct.new(media_embed: true) }
+
+        it 'returns nil' do
+          subject.thumbnail(link).must_be_nil
+        end
+      end
+
+      describe 'with content' do
+        let(:media_embed) do
+          Class.new do
+            def self.[](_arg1)
+              "&lt;iframe class=\"embedly-embed\" src=\"//cdn.embedly.com/wid"\
+              'gets/media.html?src=http%3A%2F%2Fwww.youtube.com%2Fembed%2F8Td'\
+              'X7i2lHd4%3Ffeature%3Doembed&amp;url=http%3A%2F%2Fwww.youtube.c'\
+              'om%2Fwatch%3Fv%3D8TdX7i2lHd4&amp;image=http%3A%2F%2Fi.ytimg.co'\
+              'm%2Fvi%2F8TdX7i2lHd4%2Fhqdefault.jpg&amp;key=2aa3c4d5f3de4f5b9'\
+              "120b660ad850dc9&amp;type=text%2Fhtml&amp;schema=youtube\" widt"\
+              "h=\"600\" height=\"338\" scrolling=\"no\" frameborder=\"0\" al"\
+              'lowfullscreen&gt;&lt;/iframe&gt;'
+            end
+          end
+        end
+        let(:link) { OpenStruct.new(media_embed: media_embed) }
+
+        it 'returns a decoded URI to the thumbnail' do
+          expected_uri = 'http://i.ytimg.com/vi/8TdX7i2lHd4/hqdefault.jpg'
+          subject.thumbnail(link).must_equal expected_uri
+        end
       end
     end
   end
