@@ -80,7 +80,7 @@ describe Videos do
 
   describe '#prepare_text' do
     describe 'without a thumbnail url' do
-      let(:link) { OpenStruct.new(url: 'yt.com', title: 'Video 1')}
+      let(:link) { OpenStruct.new(url: 'yt.com', title: 'Video 1') }
 
       it 'formats the message correctly' do
         expected_text = "<strong>Video:</strong> <a href='yt.com'>Video 1</a>"

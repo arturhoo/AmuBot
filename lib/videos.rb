@@ -1,7 +1,7 @@
 require_relative './base_reddit_publisher'
 
 class Videos < BaseRedditPublisher
-  def initialize(reddit_kit=RedditKit)
+  def initialize(reddit_kit = RedditKit)
     @subreddit = 'videos'
     @min_score = 1500
     super

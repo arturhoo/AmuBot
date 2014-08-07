@@ -2,7 +2,7 @@ require 'redditkit'
 require_relative './base_publisher'
 
 class BaseRedditPublisher < BasePublisher
-  def initialize(reddit_kit=RedditKit)
+  def initialize(reddit_kit = RedditKit)
     super()
     @all_links = reddit_kit.links(@subreddit, category: 'hot')
   end

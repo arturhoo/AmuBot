@@ -4,7 +4,7 @@ require_relative '../lib/base_reddit_publisher'
 describe BaseRedditPublisher do
 
   reddit_kit = Class.new do
-    def self.links(arg1, options={})
+    def self.links(_arg1, _options = {})
       []
     end
   end

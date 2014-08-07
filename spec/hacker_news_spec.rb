@@ -16,7 +16,7 @@ describe HackerNews do
         'title' => 'nyt',
         'id' => 2,
         'points' => 350
-      },
+      }
     ]
   end
   subject { HackerNews.new(hn_json_double) }

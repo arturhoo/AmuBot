@@ -4,11 +4,11 @@ require_relative './base_publisher'
 
 class HackerNews < BasePublisher
   def initialize(hn_items = nil)
-    unless hn_items
+    if hn_items
+      @all_links = hn_items
+    else
       response = JSON.parse(open('http://api.ihackernews.com/page').read)
       @all_links = response['items']
-    else
-      @all_links = hn_items
     end
     @min_score = 150
     super()

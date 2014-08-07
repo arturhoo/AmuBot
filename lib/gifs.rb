@@ -1,7 +1,7 @@
 require_relative './base_reddit_publisher'
 
 class Gifs < BaseRedditPublisher
-  def initialize(reddit_kit=RedditKit)
+  def initialize(reddit_kit = RedditKit)
     @subreddit = 'gifs'
     @min_score = 1500
     super
