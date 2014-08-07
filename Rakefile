@@ -1,5 +1,6 @@
 require './gifs'
 require './videos'
+require './hacker_news'
 
 namespace :publish do
   desc 'Publishes a gif'
@@ -13,6 +14,13 @@ namespace :publish do
   task :video do
     puts "Publishing video..."
     Videos.new.run
+    puts "done."
+  end
+
+  desc 'Publishes a piece of news'
+  task :news do
+    puts "Publishing news..."
+    HackerNews.new.run
     puts "done."
   end
 end

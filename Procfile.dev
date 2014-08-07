@@ -1,2 +1,3 @@
 gif: bundle exec rake publish:gif
 video: bundle exec rake publish:video
+news: bundle exec rake publish:news
