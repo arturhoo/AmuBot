@@ -1,9 +1,13 @@
-require './base_hn_publisher'
+require 'json'
+require 'open-uri'
+require './base_publisher'
 
-class HackerNews < BaseHNPublisher
+class HackerNews < BasePublisher
   def initialize
-    super
     @min_score = 150
+    response = JSON.parse(open('http://api.ihackernews.com/page').read)
+    @all_links = response['items']
+    super
   end
 
   def run
@@ -15,5 +19,13 @@ class HackerNews < BaseHNPublisher
                            color: 'purple')
       break
     end
+  end
+
+  def link_identifier(link)
+    link['id']
+  end
+
+  def link_score(link)
+    link['points']
   end
 end

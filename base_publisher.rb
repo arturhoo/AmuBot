@@ -1,6 +1,5 @@
 require 'hipchat'
 require 'redis'
-require 'redditkit'
 
 class BasePublisher
   def initialize
@@ -19,13 +18,12 @@ class BasePublisher
   end
 
   def links
-    all_links = RedditKit.links(@subreddit, category: 'hot')
-    all_links.select do |l|
-      @redis.get(l.full_name).nil? && l.score >= @min_score && !l.is_self?
+    @all_links.select do |l|
+      @redis.get(link_identifier(l)).nil? && link_score(l) >= @min_score
     end
   end
 
   def mark_link_as_visited(link)
-    @redis.set link.full_name, 'check'
+    @redis.set link_identifier(link), 'check'
   end
 end

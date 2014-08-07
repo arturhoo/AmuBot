@@ -1,10 +1,10 @@
-require './base_publisher'
+require './base_reddit_publisher'
 
-class Videos < BasePublisher
+class Videos < BaseRedditPublisher
   def initialize
-    super
     @subreddit = 'videos'
     @min_score = 1500
+    super
   end
 
   def run

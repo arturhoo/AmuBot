@@ -1,10 +1,10 @@
-require './base_publisher'
+require './base_reddit_publisher'
 
-class Gifs < BasePublisher
+class Gifs < BaseRedditPublisher
   def initialize
-    super
     @subreddit = 'gifs'
     @min_score = 1500
+    super
   end
 
   def run
