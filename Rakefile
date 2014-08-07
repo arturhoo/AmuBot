@@ -1,3 +1,4 @@
+require 'rake/testtask'
 require './lib/gifs'
 require './lib/videos'
 require './lib/hacker_news'
@@ -24,3 +25,14 @@ namespace :publish do
     puts "done."
   end
 end
+
+# Tests
+
+Rake::TestTask.new do |t|
+  t.libs = ["lib"]
+  t.warning = true
+  t.verbose = true
+  t.test_files = FileList['spec/*_spec.rb']
+end
+
+task :default => [:test]
