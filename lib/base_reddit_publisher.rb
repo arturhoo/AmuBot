@@ -1,5 +1,5 @@
 require 'redditkit'
-require './base_publisher'
+require_relative './base_publisher'
 
 class BaseRedditPublisher < BasePublisher
   def initialize

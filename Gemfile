@@ -8,3 +8,9 @@ gem 'hipchat'
 gem 'foreman'
 
 gem 'jazz_hands', group: :development
+
+group :test do
+  gem 'minitest'
+  gem 'minitest-reporters'
+end
+

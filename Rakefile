@@ -1,6 +1,6 @@
-require './gifs'
-require './videos'
-require './hacker_news'
+require './lib/gifs'
+require './lib/videos'
+require './lib/hacker_news'
 
 namespace :publish do
   desc 'Publishes a gif'

@@ -1,6 +1,6 @@
 require 'json'
 require 'open-uri'
-require './base_publisher'
+require_relative './base_publisher'
 
 class HackerNews < BasePublisher
   def initialize

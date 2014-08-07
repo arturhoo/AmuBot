@@ -1,4 +1,4 @@
-require './base_reddit_publisher'
+require_relative './base_reddit_publisher'
 
 class Gifs < BaseRedditPublisher
   def initialize
