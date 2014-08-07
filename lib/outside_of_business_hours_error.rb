@@ -1,0 +1,2 @@
+class OutsideOfBusinessHoursError < StandardError
+end

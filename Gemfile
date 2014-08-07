@@ -13,5 +13,6 @@ gem 'jazz_hands', group: :development
 group :test do
   gem 'minitest'
   gem 'minitest-reporters'
+  gem 'timecop'
 end
 

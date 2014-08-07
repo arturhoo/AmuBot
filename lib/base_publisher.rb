@@ -1,5 +1,6 @@
 require 'hipchat'
 require 'redis'
+require_relative './outside_of_business_hours_error'
 
 class BasePublisher
   def initialize
@@ -14,7 +15,7 @@ class BasePublisher
 
   def run
     return if Time.now.utc.hour >= 11 && Time.now.utc.hour < 22
-    abort 'Exiting. Running outside of business hours...'
+    fail OutsideOfBusinessHoursError
   end
 
   def links
