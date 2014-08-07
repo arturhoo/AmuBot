@@ -2,14 +2,14 @@ require 'redditkit'
 require_relative './base_publisher'
 
 class BaseRedditPublisher < BasePublisher
-  def initialize
-    super
-    @all_links = RedditKit.links(@subreddit, category: 'hot')
+  def initialize(reddit_kit=RedditKit)
+    super()
+    @all_links = reddit_kit.links(@subreddit, category: 'hot')
   end
 
   def run
     super
-    @all_links.to_a.reject! { |l| l.is_self? }
+    all_links.to_a.reject! { |l| l.is_self? }
   end
 
   def link_identifier(link)
@@ -19,4 +19,8 @@ class BaseRedditPublisher < BasePublisher
   def link_score(link)
     link.score
   end
+
+  private
+
+  attr_accessor :subreddit
 end
