@@ -19,7 +19,9 @@ describe BasePublisher do
     end
 
     describe 'when running inside heroku' do
-      before { ENV['REDISTOGO_URL'] = 'redis://127.0.0.1' }
+      before do
+        ENV['REDISTOGO_URL'] = ENV['REDISTOGO_URL'] || 'redis://127.0.0.1'
+      end
 
       it 'still responds to its API' do
         subject.must_respond_to :run
