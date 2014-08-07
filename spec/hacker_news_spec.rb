@@ -1,3 +1,5 @@
+require 'json'
+require 'mocha/test_unit'
 require_relative './test_helper'
 require_relative '../lib/hacker_news'
 
@@ -32,6 +34,17 @@ describe HackerNews do
 
     it 'responds to #link_score' do
       subject.must_respond_to :link_score
+    end
+
+    describe 'with an invalid hn items entry' do
+      before do
+        JSON.stubs(:parse).returns(nil)
+      end
+      after { JSON.unstub(:parse) }
+
+      it 'calls parse on the json, that is, uses the HN api' do
+        JSON.expects(:parse).once
+      end
     end
   end
 
