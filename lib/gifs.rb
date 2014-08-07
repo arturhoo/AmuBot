@@ -14,7 +14,7 @@ class Gifs < BaseRedditPublisher
       mark_link_as_visited l
       text = "<strong>Gif:</strong> #{l.title}<br><img src=\"#{l.url}\">"
       @hipchat[@room].send('Gifs', text, message_format: 'html',
-                           color: 'purple')
+                                         color: 'purple')
       break
     end
   end

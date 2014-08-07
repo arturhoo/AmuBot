@@ -16,7 +16,7 @@ class HackerNews < BasePublisher
       mark_link_as_visited l
       text = "<strong>News:</strong> <a href='#{l['url']}'>#{l['title']}</a>"
       @hipchat[@room].send('News', text, message_format: 'html',
-                           color: 'purple')
+                                         color: 'purple')
       break
     end
   end
