@@ -6,6 +6,7 @@ gem 'redditkit'
 gem 'redis'
 gem 'hipchat'
 gem 'foreman'
+gem 'coveralls', require: false
 
 gem 'jazz_hands', group: :development
 
