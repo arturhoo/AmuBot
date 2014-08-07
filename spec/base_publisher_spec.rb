@@ -54,7 +54,6 @@ describe BasePublisher do
   end
 
   describe '#links' do
-
     before do
       def subject.link_score(link)
         link.score
@@ -106,6 +105,21 @@ describe BasePublisher do
           subject.links.must_equal [@link2]
         end
       end
+    end
+  end
+
+  describe '#mark_link_as_visited' do
+    before do
+      def subject.link_identifier(link)
+        link.id
+      end
+      @link = OpenStruct.new(id: 1)
+    end
+    after { Redis.new.flushdb }
+
+    it 'sets the link id on redis' do
+      subject.mark_link_as_visited(@link)
+      subject.send(:redis).get(@link.id).must_equal 'check'
     end
   end
 end
