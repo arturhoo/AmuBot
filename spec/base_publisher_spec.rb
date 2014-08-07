@@ -81,47 +81,50 @@ describe BasePublisher do
     end
 
     describe 'with two links, only one above the threshold' do
+      let(:link1) { OpenStruct.new(id: 1, score: 10) }
+      let(:link2) { OpenStruct.new(id: 2, score: 3) }
+
       before do
-        @link1 = OpenStruct.new(id: 1, score: 10)
-        @link2 = OpenStruct.new(id: 2, score: 3)
       end
       after { Redis.new.flushdb }
 
       it 'returns only the link with score above the threshold' do
-        subject.stub :all_links, [@link1, @link2] do
-          subject.links.must_equal [@link1]
+        subject.stub :all_links, [link1, link2] do
+          subject.links.must_equal [link1]
         end
       end
     end
 
     describe 'with two links, only one unpublished' do
+      let(:link1) { OpenStruct.new(id: 1, score: 10) }
+      let(:link2) { OpenStruct.new(id: 2, score: 10) }
+
       before do
-        @link1 = OpenStruct.new(id: 1, score: 10)
-        @link2 = OpenStruct.new(id: 2, score: 10)
         Redis.new.set(1, 'check')
       end
       after { Redis.new.flushdb }
 
       it 'returns only the unpublished link' do
-        subject.stub :all_links, [@link1, @link2] do
-          subject.links.must_equal [@link2]
+        subject.stub :all_links, [link1, link2] do
+          subject.links.must_equal [link2]
         end
       end
     end
   end
 
   describe '#mark_link_as_visited' do
+    let(:link) { OpenStruct.new(id: 1) }
+
     before do
       def subject.link_identifier(link)
         link.id
       end
-      @link = OpenStruct.new(id: 1)
     end
     after { Redis.new.flushdb }
 
     it 'sets the link id on redis' do
-      subject.mark_link_as_visited(@link)
-      subject.send(:redis).get(@link.id).must_equal 'check'
+      subject.mark_link_as_visited(link)
+      subject.send(:redis).get(link.id).must_equal 'check'
     end
   end
 end
