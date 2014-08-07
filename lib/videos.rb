@@ -1,7 +1,7 @@
 require_relative './base_reddit_publisher'
 
 class Videos < BaseRedditPublisher
-  def initialize
+  def initialize(reddit_kit=RedditKit)
     @subreddit = 'videos'
     @min_score = 1500
     super
@@ -12,8 +12,8 @@ class Videos < BaseRedditPublisher
     links.each do |l|
       mark_link_as_visited l
       text = prepare_text(l)
-      @hipchat[@room].send('Videos', text, message_format: 'html',
-                                           color: 'purple')
+      hipchat[room].send('Videos', text, message_format: 'html',
+                                         color: 'purple')
       break
     end
   end
