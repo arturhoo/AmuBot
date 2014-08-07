@@ -21,7 +21,11 @@ class BasePublisher
   def links
     all_links = RedditKit.links(@subreddit, category: 'hot')
     all_links.select do |l|
-      @redis.get(l.id).nil? && l.score >= @min_score && !l.is_self?
+      @redis.get(l.full_name).nil? && l.score >= @min_score && !l.is_self?
     end
+  end
+
+  def mark_link_as_visited(link)
+    @redis.set link.full_name, 'check'
   end
 end

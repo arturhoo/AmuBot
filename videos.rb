@@ -10,7 +10,7 @@ class Videos < BasePublisher
   def run
     super
     links.each do |l|
-      @redis.set l.id, 'check'
+      mark_link_as_visited l
       text = prepare_text(l)
       @hipchat[@room].send('Videos', text, message_format: 'html',
                                            color: 'purple')
