@@ -55,3 +55,8 @@ bundle exec rake publish:news
 ```bash
 bundle exec rake
 ```
+
+##License
+
+Copyright (c) Artur Rodrigues. See the LICENSE.md file for license rights and
+limitations (MIT).
