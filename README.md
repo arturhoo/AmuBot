@@ -49,3 +49,9 @@ that you should use Rake tasks, like bellow
 ```bash
 bundle exec rake publish:news
 ```
+
+# Running tests
+
+```bash
+bundle exec rake
+```
