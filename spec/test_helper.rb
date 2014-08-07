@@ -7,3 +7,5 @@ require 'minitest/reporters'
 Minitest::Reporters.use! Minitest::Reporters::DefaultReporter.new
 
 require 'timecop'
+require 'redis'
+Redis.new.flushdb

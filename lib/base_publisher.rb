@@ -19,12 +19,16 @@ class BasePublisher
   end
 
   def links
-    @all_links.select do |l|
-      @redis.get(link_identifier(l)).nil? && link_score(l) >= @min_score
+    all_links.select do |l|
+      redis.get(link_identifier(l)).nil? && link_score(l) >= min_score
     end
   end
 
   def mark_link_as_visited(link)
-    @redis.set link_identifier(link), 'check'
+    redis.set link_identifier(link), 'check'
   end
+
+  private
+
+  attr_accessor :room, :hipchat, :all_links, :redis, :min_score
 end

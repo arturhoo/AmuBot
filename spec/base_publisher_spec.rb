@@ -20,7 +20,6 @@ describe BasePublisher do
 
     describe 'when running inside heroku' do
       before { ENV['REDISTOGO_URL'] = 'redis://127.0.0.1' }
-      after { ENV.delete 'REDISTOGO_URL' }
 
       it 'still responds to its API' do
         subject.must_respond_to :run
@@ -50,6 +49,62 @@ describe BasePublisher do
 
       it 'throws error' do
         proc { subject.run }.must_raise OutsideOfBusinessHoursError
+      end
+    end
+  end
+
+  describe '#links' do
+
+    before do
+      def subject.link_score(link)
+        link.score
+      end
+
+      def subject.link_identifier(link)
+        link.id
+      end
+
+      subject.send(:min_score=, 5)
+    end
+
+    describe 'with no links' do
+      before do
+        def subject.all_links
+          []
+        end
+      end
+
+      it 'returns and empty array' do
+        subject.links.must_be_empty
+      end
+    end
+
+    describe 'with two links, only one above the threshold' do
+      before do
+        @link1 = OpenStruct.new(id: 1, score: 10)
+        @link2 = OpenStruct.new(id: 2, score: 3)
+      end
+      after { Redis.new.flushdb }
+
+      it 'returns only the link with score above the threshold' do
+        subject.stub :all_links, [@link1, @link2] do
+          subject.links.must_equal [@link1]
+        end
+      end
+    end
+
+    describe 'with two links, only one unpublished' do
+      before do
+        @link1 = OpenStruct.new(id: 1, score: 10)
+        @link2 = OpenStruct.new(id: 2, score: 10)
+        Redis.new.set(1, 'check')
+      end
+      after { Redis.new.flushdb }
+
+      it 'returns only the unpublished link' do
+        subject.stub :all_links, [@link1, @link2] do
+          subject.links.must_equal [@link2]
+        end
       end
     end
   end
