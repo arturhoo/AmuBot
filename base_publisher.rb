@@ -18,10 +18,6 @@ class BasePublisher
     abort 'Exiting. Running outside of business hours...'
   end
 
-  def custom_run
-    puts 'Should be implemented by children...'
-  end
-
   def links
     all_links = RedditKit.links(@subreddit, category: 'hot')
     all_links.select do |l|
