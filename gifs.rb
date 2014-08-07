@@ -16,7 +16,8 @@ class Gifs
     links = RedditKit.links('gifs', category: 'hot')
 
     links.each do |l|
-      if redis.get(l.id).nil? && l.score >= 2500 && l.url[-4..-1] == '.gif'
+      if redis.get(l.id).nil? && l.score >= 1500 && l.url[-4..-1] == '.gif' &&
+         !l.is_self?
         redis.set l.id, 'check'
 
         text = "<strong>Gif:</strong> #{l.title}<br><img src=\"#{l.url}\">"
